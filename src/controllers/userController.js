@@ -44,10 +44,10 @@ exports.getUserById = async (req, res) => {
     try {
         const connection = await mysql.createConnection(databaseConfig);
         
-        const [rows] = await connection.query('SELECT * FROM user WHERE id = ?', [id]);
+        const user = await connection.query('SELECT * FROM user WHERE id = ?', [id]);
         await connection.end();
 
-        res.status(200).json(rows);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).send({
             message: 'Error getting user!',
@@ -81,10 +81,10 @@ exports.deleteUser = async (req, res) => {
     try {
         const connection = await mysql.createConnection(databaseConfig);
         
-        const [rows] = await connection.query('DELETE FROM user WHERE id = ?', [id]);
+        await connection.query('DELETE FROM user WHERE id = ?', [id]);
         await connection.end();
 
-        res.status(200).json(rows);
+        res.status(200).send({ message: 'User deleted successfully!' });
     } catch (error) {
         res.status(500).send({
             message: 'Error deleting user!',
