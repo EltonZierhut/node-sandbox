@@ -4,12 +4,14 @@ const bodyParser = require("body-parser");
 const databaseConfig = require("./config/database");
 const userRouter = require("./router/userRouter");
 const authRouter = require("./router/authRouter");
+const cors = require("cors");
 
-const port = 3000;
+const port = 3001;
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const connection = mysql.createConnection(databaseConfig);
 
@@ -26,5 +28,5 @@ app.use('/api', userRouter);
 app.use('/api', authRouter);
 
 app.listen(port, () => {
-  console.log("Example app listening on port 3000!");
+  console.log(`Example app listening on port ${port}!`);
 });
